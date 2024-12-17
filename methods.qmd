@@ -15,22 +15,26 @@ library(tidyverse)
 library(knitr)
 library(xfun)
 library(openxlsx)
+library(plotly)
 ```
 
-## Load Datasets
+## Load and integrate Datasets
 
-We 
+We ...
 
 ```{r}
+
+#| code-fold: true
+#| code-summary: "Show the code"
 
 ### 1. Load Datasets ###
 # Load all data sets here
 # Can also use read_excel() to load .xlsx and .xls files
-data_aquatic_barriers <- read_csv("Formatted Data\\Aquaticbarriers.org\\aquatic_barrier_ranks_aquaticbarriers_org.csv", col_types = cols(.default = "c")) # nolint:
-data_ADFG <- read_csv("Formatted Data\\ADFG\\Kenai culvert prioritization ADFG.csv", col_types = cols(.default = "c")) # nolint:
-data_FWS_FBH22 <- read_csv("Formatted Data\\USFWS\\2022fishbarrierhunter.csv", col_types = cols(.default = "c")) # nolint:
-data_FWS_FBH23 <- read_csv("Formatted Data\\USFWS\\2023fishbarrierhunter.csv", col_types = cols(.default = "c")) # nolint:
-data_FWS_Kenai <- read_csv("Formatted Data\\USFWS\\Kenai USFWS Fish Passage_Projects_Needs_ 12_20_23.csv", col_types = cols(.default = "c")) # nolint:
+data_aquatic_barriers <- read_csv("other/input/formatted_data/Aquaticbarriers/aquatic_barrier_ranks_aquaticbarriers_org.csv", col_types = cols(.default = "c"))
+data_ADFG <- read_csv("other/input/formatted_data/ADFG/Kenai_culvert_prioritization_ADFG.csv", col_types = cols(.default = "c")) 
+data_FWS_FBH22 <- read_csv("other/input/formatted_data/USFWS/2022fishbarrierhunter.csv", col_types = cols(.default = "c")) 
+data_FWS_FBH23 <- read_csv("other/input/formatted_data/USFWS/2023fishbarrierhunter.csv", col_types = cols(.default = "c")) 
+data_FWS_Kenai <- read_csv("other/input/formatted_data/USFWS/Kenai USFWS Fish Passage_Projects_Needs_ 12_20_23.csv", col_types = cols(.default = "c")) 
 
 ### 2. Format Labels ###
 # Create formatted labels to create links between subsets and master set
@@ -98,7 +102,13 @@ merged_data_set <- merged_data_set |>
     )
   ) |>
   mutate(Perch_Height = as.numeric(Perch_Height))
+```
 
+<br> 
+
+## Assign Priority Points based on Physical Attributes
+
+```{r }
 
 ### 8. Assign Priority Points based on Physical Attributes ###
 # 8.a Perch Height (ft)
@@ -137,7 +147,14 @@ function_crossing_slope_pts <- function(value) {
     TRUE ~ 0 # assigned to blank values
   )
 }
+```
 
+<br>
+
+
+## Assign Priority Points based on Ecological Attributes 
+
+```{r}
 
 ### 9. Assign Priority Points based on Ecological Attributes ###
 # 9.a Presence of Anadromous Species vs. Resident (count)
@@ -147,10 +164,10 @@ function_anadromous_pts <- function(value) {
   
   anadromous_species_list <- c("CO", "COr", "COs", "COsr", "COp", "k", "Kr", "Ks", "Ksr", "Kp", "S", "Sr", "Ss", "Ssr", "Sp", "P", "Pr", "Ps", "Psr", "Pp", "CH", "CHr", "CHs", "CHsr", "CHp", "SH", "SHr", "SHs", "SHsr", "SHp") # nolint:
   resident_species_list <- c("DV", "DVr", "DVs", "DVsr", "DVp", "W", "Wr", "Ws", "Wsr", "Wp") # nolint:
-
+  
   number_anadromous <- sum(species_list %in% anadromous_species_list)
   number_resident <- sum(species_list %in% resident_species_list)
-
+  
   if (length(species_list) == 0) {
     return(0)
   } else if (number_anadromous == 0 && number_resident == 0) {
@@ -193,20 +210,26 @@ function_upstream_area_pts <- function(value) {
 ### 10. Calculate points and update priority field ###
 # Physical Priority
 merged_data_set <- merged_data_set |>
- rowwise() |>
- mutate(Priority_Physical = function_perch_height_pts(Perch_Height) + function_constriction_pts(Constriction_Ratio) + function_crossing_slope_pts(Structure_Slope)) |> # nolint:
- ungroup()
+  rowwise() |>
+  mutate(Priority_Physical = function_perch_height_pts(Perch_Height) + function_constriction_pts(Constriction_Ratio) + function_crossing_slope_pts(Structure_Slope)) |> # nolint:
+  ungroup()
 
 # Ecological Priority
- merged_data_set <- merged_data_set |>
- rowwise() |>
- mutate(Priority_Ecological = function_anadromous_pts(Fish_Species_Composition) + function_upstream_length_pts(Reported_Upstream_Fish_Habitat_miles) + function_upstream_area_pts(Reported_Upstream_Lake_Fish_Habitat_acres)) |> # nolint:
- ungroup()
+merged_data_set <- merged_data_set |>
+  rowwise() |>
+  mutate(Priority_Ecological = function_anadromous_pts(Fish_Species_Composition) + function_upstream_length_pts(Reported_Upstream_Fish_Habitat_miles) + function_upstream_area_pts(Reported_Upstream_Lake_Fish_Habitat_acres)) |> # nolint:
+  ungroup()
 
 # Total Priority
- merged_data_set <- merged_data_set |> mutate(Priority_Total = Priority_Physical + Priority_Ecological) # nolint:
+merged_data_set <- merged_data_set |> mutate(Priority_Total = Priority_Physical + Priority_Ecological) # nolint:
 
+```
 
+<br>
+
+## Export and prep
+
+```{r}
 ### 11. Write Data to Excel Sheet ###
 # Creates new .xlsx file for the master sheet in the current directory with the current date. # nolint:
 master_data_set_file_name <- paste0("CombinedData_", today, ".xlsx")
@@ -220,24 +243,35 @@ saveWorkbook(wb, file = master_data_set_file_name, overwrite = TRUE)
 
 
 # Create the plot
-ggplot(merged_data_set, aes(x = Priority_Ecological, y = Priority_Physical)) +
-  geom_point(color = "blue", size = 3) +
+p <- ggplot(merged_data_set, aes(x = Priority_Ecological, y = Priority_Physical,
+                                 text = paste("Location:",Latitude,Longitude,"\n",
+                                              "Stream:",`Stream Name`))) +
+  geom_jitter(color = "blue", size = 2, width = .4, height = 0.4) +
   labs(x = "Ecological Condition", y = "Physical Condition") +
   theme_minimal() +
+
+
   # Add the priority zones (adjust colors and labels as needed)
-  geom_rect(xmin = 0, xmax = 10, ymin = 0, ymax = 5, fill = "pink", alpha = 0.8) +
-  geom_rect(xmin = 10, xmax = 20, ymin = 0, ymax = 5, fill = "#199e19", alpha = 0.2) +
-  geom_rect(xmin = 0, xmax = 10, ymin = 5, ymax = 10, fill = "lightblue", alpha = 0.8) +
-  geom_rect(xmin = 10, xmax = 20, ymin = 5, ymax = 10, fill = "yellow", alpha = 0.8) +
+  #geom_rect(xmin = 0, xmax = 10, ymin = 0, ymax = 5, fill = "pink", alpha = 0.3) +
+  #geom_rect(xmin = 10, xmax = 20, ymin = 0, ymax = 5, fill = "#199e19", alpha = 0.2) +
+  #geom_rect(xmin = 0, xmax = 10, ymin = 5, ymax = 10, fill = "lightblue", alpha = 0.2) +
+  #geom_rect(xmin = 10, xmax = 20, ymin = 5, ymax = 10, fill = "yellow", alpha = 0.2) + 
+  
   # Add priority labels
   annotate("text", x = 5, y = 2.5, label = "4 = Lowest Priority", color = "black") +
   annotate("text", x = 15, y = 2.5, label = "2 = Hi-Middle Priority", color = "black") +
-  annotate("text", x = 5, y = 7.5, label = "3 = Lo-Middle Priority", color = "black") +
+  annotate("text", x = 5, y = 7.5, label = "3 = Low-Middle Priority", color = "black") +
   annotate("text", x = 15, y = 7.5, label = "1 = Highest Priority", color = "black") +
-  # Add axes labels
-  geom_segment(aes(x = 0, y = 0, xend = 10, yend = 0), arrow = arrow(length = unit(0.2, "cm"))) +
-  geom_segment(aes(x = 0, y = 0, xend = 0, yend = 10), arrow = arrow(length = unit(0.2, "cm")))
 
+  # Add axes labels
+  geom_segment(aes(x = 0, y = 0, xend = 20, yend = 0)) +
+  geom_segment(aes(x = 0, y = 0, xend = 0, yend = 12)) +
+  geom_segment(aes(x = 10, y = 0, xend = 10, yend = 12), linetype = 2) +
+  geom_segment(aes(x = 0, y = 6, xend = 20, yend = 6), linetype = 2)
+  
+
+# make plotly
+ggplotly(p)
 
 ```
 
