@@ -1,7 +1,21 @@
 # Summary
 
-In summary, this book has no content whatsoever.
+-   Most fish passage structures inventoried do not have
+
+-   Our method is biased to rank sites higher where more site details about the physical infrastructure are available. A
+
+-   Eco - based on known hab only. does not include lakes. current rankings a reflection of where feasible to do fieldwork,
+
+-   Additional fieldwork to update these datasets
+
+-   
 
 ```{r}
-1 + 1
+
+tbl <- merged_data_set |>
+  group_by(Perch_Height,Constriction_Ratio,Structure_Slope) |>
+  count()
+
+tbl
+
 ```
