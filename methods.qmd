@@ -18,9 +18,24 @@ library(openxlsx)
 library(plotly)
 ```
 
-## Load and integrate Datasets
+Methods described here are primarily for purposes of executing code to synthesize multiple datasets. A more detailed report with an expanded methods section is available for download below.
 
-We ...
+```{r echo = F}
+#xfun:embed_file()
+
+```
+
+## Load and Integrate Datasets
+
+We used the following datasets on Kenai Peninsula Borough area stream crossings to create the combined dataset:
+
+-   Fish Barrier Hunter 2022 (U.S. Fish & Wildlife Service)
+
+-   Fish Barrier Hunter 2023 (U.S. Fish & Wildlife Service)
+
+-   2024 Anadromous Waters Catalog inventory (Alaska Department of Fish and Game)
+
+-   AquaticBarriers.org
 
 ```{r}
 
@@ -39,10 +54,14 @@ data_FWS_Kenai <- read_csv("other/input/formatted_data/USFWS/Kenai USFWS Fish Pa
 ### 2. Format Labels ###
 # Create formatted labels to create links between subsets and master set
 labels_aquatic_barriers <- c("data source", "Latitude", "Longitude", "Name", "SARPID", "Source", "Snapped", "NHDPlusID", "StreamSizeClass", "LocalID", "CrossingCode", "NearestCrossingID", "Stream Name", "AnnualVelocity", "AnnualFlow", "TotDASqKm", "Road Name", "RoadType", "Structure Type", "Constriction_Ratio", "PotentialProject", "BarrierSeverity", "SARP_Score", "Recon", "Removed", "YearRemoved", "Condition", "PassageFacility", "TESpp", "StateSGCNSpp", "RegionalSGCNSpp", "Trout", "Landownership", "BarrierOwnerType", "ProtectedLand", "External Report Links", "EJTract", "EJTribal", "Basin", "Subbasin", "Subwatershed", "HUC2", "HUC6", "HUC8", "HUC10", "HUC12", "State", "County", "Excluded", "Invasive", "OnLoop", "HasNetwork", "Ranked", "Intermittent", "StreamOrder", "Landcover", "SizeClasses", "TotalUpstreamMiles", "PerennialUpstreamMiles", "Reported_Upstream_Fish_Habitat_miles", "AlteredUpstreamMiles", "UnalteredUpstreamMiles", "PerennialUnalteredUpstreamMiles", "TotalDownstreamMiles", "FreeDownstreamMiles", "FreePerennialDownstreamMiles", "FreeIntermittentDownstreamMiles", "FreeAlteredDownstreamMiles", "FreeUnalteredDownstreamMiles", "GainMiles", "PerennialGainMiles", "TotalNetworkMiles", "TotalPerennialNetworkMiles", "PercentUnaltered", "PercentPerennialUnaltered", "UpstreamDrainageArea", "UpstreamWaterfalls", "UpstreamDams", "UpstreamSmallBarriers", "UpstreamRoadCrossings", "UpstreamHeadwaters", "TotalUpstreamRoadCrossings", "TotalDownstreamWaterfalls", "TotalDownstreamDams", "TotalDownstreamSmallBarriers", "MilesToOutlet", "FlowsToOcean", "FlowsToGreatLakes", "ExitsRegion") # nolint:
+
 labels_ADFG <- c("ADF&G Crossing Code", "ADF&G rating", "Sport Fish Area Boundary", "Area, Region, Quad or City", "Road Name", "Stream Name", "Prioritization", "AWCStreamNo", "Miles Used for Scoring", "MSB Culverts to 16pc Gradient with Green culverts removed ", "Reported_Upstream_Fish_Habitat_miles", "Pre-2022 Miles Data to NEXT BARRIER or END", "AWC Miles U/S- ", "Acres of Lake", "Fish_Species_Composition", "No of Anadromous Species", "Resident AFFI- Needs to be updated.", "No of resident species", "Red/Gray rating", "Rating w/ Perch", "Perch_Height", "Perch", "Latitude", "Longitude", "Additional Notes") # nolint:
+
 labels_FWS_FBH22 <- c("x", "y", "ObjectID", "GlobalID", "CreationDate", "Creator", "EditDate", "Editor", "Date and Time Observed:", "Observer Name:", "Observer Phone:", "Number of Culverts at your Crossing Site:", "Culvert Material:", "Other - Culvert Material:", "Closest Town:", "Stream Name", "Enter more data?", "Tributary to:", "Subwatershed Name:", "Road Name", "Road Elevation:", "Road Surface:", "Landownership", "Culvert Condition:", "Structure Type", "Channel Wetted Width (feet):", "Upstream_OHWM_feet", "Upstream_Bankfull_Width_feet", "Road Fill Height Over Top of Culvert:", "Tidal Site", "Structure Wetted Width at Inlet (feet):", "Water Depth at Inlet (feet):", "Substrate width in Culvert:", "Percent of Inlet Blocked by Debris:", "Grate at Inlet:", "Visible Deformation", "Structure Wetted Width at Outlet (feet):", "Water Depth at Outlet (feet):", "Percent of Outlet Blocked by Debris:", "Grate at Outlet:", "Visible Deformation at Outlet:", "Perch_Height", "Outlet Scour Pool", "Would you like to add data for more culverts?", "Culvert or Bridge Cell 2 of:", "Cell 2 Structure Type:", "Cell 2 Inlet Structure Width:", "Cell 2 Inlet Structure Height above Water:", "Cell 2 Inlet Structure Wetted Width:", "Cell 2 Inlet Water Depth:", "Cell 2 Outlet Structure Width:", "Cell 2 Outlet Structure Height above Water:", "Cell 2 Outlet Wetted Width:", "Cell 2 Outlet Water Depth:", "Culvert or Bridge Cell 3 of:", "Cell 3 Structure Type:", "Cell 3 Inlet Structure Width:", "Cell 3 Inlet Structure Height above Water:", "Cell 3 Inlet Structure Wetted Width:", "Cell 3 Inlet Water Depth:", "Cell 3 Outlet Structure Width:", "Cell 3 Outlet Structure Height above Water:", "Cell 3 Outlet Wetted Width:", "Cell 3 Outlet Water Depth:", "Culvert or Bridge Cell 4 of:", "Cell 4 Structure Type:", "Cell 4 Inlet Structure Width:", "Cell 4 Inlet Structure Height above Water:", "Cell 4 Inlet Structure Wetted Width:", "Cell 4 Inlet Water Depth:", "Cell 4 Outlet Structure Width:", "Cell 4 Outlet Structure Height above Water:", "Cell 4 Outlet Wetted Width:", "Cell 4 Outlet Water Depth:", "Perched Culvert:", "Are you on private land?", "Please Fill Out Volunteer Form Below.", "Would you like to enter more data?", "Fish Species Present", "Length of Culvert (feet):", "Enter additional photos?", "Is there a hydraulic jump at the inlet?", "Fish Passage Barrier Severity", "Notes", "Is there a known site identification number for this crossing?", "Known Site ID (ADF&G No.)", "Additional Note for ADFG", "Longitude", "Latitude") # nolint:
+
 labels_FWS_FBH23 <- c("x", "y", "ObjectID", "GlobalID", "CreationDa", "Creator", "EditDate", "Editor", "Date_and_T", "Observer_N", "Observer_P", "Number_of_", "Culvert_Ma", "Other___Cu", "Closest_To", "Stream Name", "Enter_more", "Tributary_", "Subwatersh", "Road Name", "Road_Eleva", "Road_Surfa", "Landownership", "Culvert_Co", "Structure Type", "Channel_We", "Upstream_OHWM_feet", "Upstream_Bankfull_Width_feet", "Road_Fill_", "Tidal Site", "Structure1", "Water_Dept", "Structur_1", "Water_De_1", "Substrate_", "Percent_of", "Grate_at_I", "Visible Deformation", "Structur_2", "Water_De_2", "Structur_3", "Water_De_3", "Percent__1", "Grate_at_O", "Visible__1", "Perch_Height", "Scour_Pool", "Would_you_", "Culvert_or", "Cell_2_Str", "Cell_2_Inl", "Cell_2_I_1", "Cell_2_I_2", "Cell_2_I_3", "Cell_2_Out", "Cell_2_O_1", "Cell_2_O_2", "Cell_2_O_3", "Culvert__1", "Cell_3_Str", "Cell_3_Inl", "Cell_3_I_1", "Cell_3_I_2", "Cell_3_I_3", "Cell_3_Out", "Cell_3_O_1", "Cell_3_O_2", "Cell_3_O_3", "Culvert__2", "Cell_4_Str", "Cell_4_Inl", "Cell_4_I_1", "Cell_4_I_2", "Cell_4_I_3", "Cell_4_Out", "Cell_4_O_1", "Cell_4_O_2", "Cell_4_O_3", "Perched_Cu", "Are_you_on", "Please_Fil", "Would_you1", "Fish_Speci", "Length_of_", "Enter_addi", "Length_of1", "Is_there_a", "Fish_Passa", "Notes", "Is_there_1", "Known_Site", "x_1", "y_1", "Additional", "Longitude", "Latitude") # nolint:
-labels_FWS_Kenai <- c("area", "category", "Title ", "Replacement Date", "Replacement Date Notes", "ADF&G Crossing Code", "KWF ID#", "Alt ID", "Landownership", "Funding ", "Category", "Latitude", "Longitude", "Last Eval", "Reported_Upstream_Fish_Habitat_miles", "Reported_Upstream_Lake_Fish_Habitat_acres", "upstream habitat notes", "Salmon Species", "Issue", "Additional Notes") # nolint:
+
+labels_FWS_Kenai <- c("area", "category", "Title ", "Replacement Date", "Replacement Date Notes", "ADF&G Crossing Code", "KWF ID#", "Alt ID", "Landownership", "Funding ", "Category", "Latitude", "Longitude", "Last Eval", "Reported_Upstream_Fish_Habitat_miles", "Reported_Upstream_Lake_Fish_Habitat_acres", "upstream habitat notes", "Salmon Species", "Issue", "Additional Notes") 
 
 
 ### 3. Prepare Master Dataset ###
@@ -104,7 +123,7 @@ merged_data_set <- merged_data_set |>
   mutate(Perch_Height = as.numeric(Perch_Height))
 ```
 
-<br> 
+<br>
 
 ## Assign Priority Points based on Physical Attributes
 
@@ -151,8 +170,7 @@ function_crossing_slope_pts <- function(value) {
 
 <br>
 
-
-## Assign Priority Points based on Ecological Attributes 
+## Assign Priority Points based on Ecological Attributes
 
 ```{r}
 
@@ -274,4 +292,3 @@ p <- ggplot(merged_data_set, aes(x = Priority_Ecological, y = Priority_Physical,
 ggplotly(p)
 
 ```
-
