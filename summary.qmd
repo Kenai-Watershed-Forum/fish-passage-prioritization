@@ -1,5 +1,24 @@
 # Summary
 
+```{r , include=FALSE}
+# R 4.4.1 | Created by Brady Halvorson with River Focus, Inc. November 8, 2024.
+# R 4.4.2 | Prepared for integration in Quarto by Benjamin Meyer, Kenai Watershed Forum, December 17, 2024
+
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
+
+# clear environment
+# rm(list=ls())
+
+# load packages
+library(tinytex)
+library(tidyverse)
+library(knitr)
+library(xfun)
+library(openxlsx)
+library(plotly)
+library(readxl)
+```
+
 -   Most fish passage structures inventoried do not have
 
 -   Our method is biased to rank sites higher where more site details about the physical infrastructure are available. A
@@ -11,6 +30,14 @@
 -   
 
 ```{r}
+
+#| code-fold: true
+#| code-summary: "Show the code"
+
+# read in merged data set
+today <- format(Sys.Date(), "%m%d%Y") # MMDDYYYY format
+master_data_set_file_name <- paste0("other/output/","CombinedData_", today, ".xlsx")
+merged_data_set <- read_excel(master_data_set_file_name)
 
 tbl <- merged_data_set |>
   group_by(Perch_Height,Constriction_Ratio,Structure_Slope) |>
