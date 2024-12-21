@@ -27,6 +27,12 @@ library(readxl)
 
 -   Additional fieldwork to update these datasets
 
+-   Next steps
+
+    -   Main summarized steps
+
+    -   link to downloadable document with more detailed recs
+
 -   
 
 ```{r}
