@@ -18,7 +18,7 @@ library(openxlsx)
 library(plotly)
 ```
 
-Methods described here are primarily for purposes of executing code to synthesize multiple datasets. A more detailed report with an expanded methods section is available for download below.
+Methods described within this document are primarily for purposes of executing code to synthesize multiple fish passage  datasets. A more detailed report with an expanded methods section is available for download below.
 
 ```{r echo = F}
 #xfun:embed_file()
@@ -252,8 +252,6 @@ writeData(wb, 1, (merged_data_set), startRow = 1, startCol = 1)
 # Save Master Set to Excel File in current directory
 saveWorkbook(wb, file = master_data_set_file_name, overwrite = TRUE)
 
-
 ```
 
 <br>
-
