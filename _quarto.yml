@@ -1,23 +1,40 @@
 project:
   type: book
+  output-dir: docs
 
 book:
-  title: "book-template"
-  author: "Norah Jones"
-  date: "12/27/2024"
+  title: "Kenai Peninsula Borough Fish Passage Prioritization Data Synthesis [DRAFT]"
+  author: "Benjamin Meyer, Kenai Watershed Forum"
+  page-navigation: true
   chapters:
     - index.qmd
-    - intro.qmd
+    - methods.qmd
+    - results.qmd
     - summary.qmd
     - references.qmd
+    
+  repo-url: https://github.com/Kenai-Watershed-Forum/fish-passage-prioritization
+  repo-actions: [edit]
+  search: true
+  downloads: [docx]  
 
 bibliography: references.bib
 
 format:
   html:
     theme: cosmo
-  pdf:
-    documentclass: scrreprt
+    code-fold: true
+    code-summary: "Show the code"
+  #pdf:
+  #  documentclass: scrreprt
+  docx:
+    toc: true
+    toc-depth: 2
+    toc-title: Table of contents
+    number-sections: true
+    highlight-style: github
 
 editor: visual
+
+
 
