@@ -1,5 +1,85 @@
 ---
-title: "results"
+title: "Results"
 format: html
 ---
 
+```{r , include=FALSE}
+# R 4.4.1 | Created by Brady Halvorson with River Focus, Inc. November 8, 2024.
+# R 4.4.2 | Prepared for integration in Quarto by Benjamin Meyer, Kenai Watershed Forum, December 17, 2024
+
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
+
+# clear environment
+# rm(list=ls())
+
+# load packages
+library(tinytex)
+library(tidyverse)
+library(knitr)
+library(xfun)
+library(openxlsx)
+library(plotly)
+library(readxl)
+library(leaflet)
+```
+
+## Export and prep
+
+```{r}
+
+#| code-fold: true
+#| code-summary: "Show the code"
+
+# read in merged data set
+today <- format(Sys.Date(), "%m%d%Y") # MMDDYYYY format
+master_data_set_file_name <- paste0("other/output/","CombinedData_", today, ".xlsx")
+merged_data_set <- read_excel(master_data_set_file_name)
+
+# Create the plot
+p <- ggplot(merged_data_set, aes(x = Priority_Ecological, y = Priority_Physical,
+                                 text = paste("Location:",Latitude,Longitude,"\n",
+                                              "Stream:",`Stream Name`))) +
+  geom_jitter(color = "blue", size = 2, width = .4, height = 0.4) +
+  labs(x = "Ecological Condition", y = "Physical Condition") +
+  theme_minimal() +
+
+
+  # Add the priority zones (adjust colors and labels as needed)
+  #geom_rect(xmin = 0, xmax = 10, ymin = 0, ymax = 5, fill = "pink", alpha = 0.3) +
+  #geom_rect(xmin = 10, xmax = 20, ymin = 0, ymax = 5, fill = "#199e19", alpha = 0.2) +
+  #geom_rect(xmin = 0, xmax = 10, ymin = 5, ymax = 10, fill = "lightblue", alpha = 0.2) +
+  #geom_rect(xmin = 10, xmax = 20, ymin = 5, ymax = 10, fill = "yellow", alpha = 0.2) + 
+  
+  # Add priority labels
+  annotate("text", x = 5, y = 2.5, label = "4 = Lowest Priority", color = "black") +
+  annotate("text", x = 15, y = 2.5, label = "2 = Hi-Middle Priority", color = "black") +
+  annotate("text", x = 5, y = 7.5, label = "3 = Low-Middle Priority", color = "black") +
+  annotate("text", x = 15, y = 7.5, label = "1 = Highest Priority", color = "black") +
+
+  # Add axes labels
+  geom_segment(aes(x = 0, y = 0, xend = 20, yend = 0)) +
+  geom_segment(aes(x = 0, y = 0, xend = 0, yend = 12)) +
+  geom_segment(aes(x = 10, y = 0, xend = 10, yend = 12), linetype = 2) +
+  geom_segment(aes(x = 0, y = 6, xend = 20, yend = 6), linetype = 2)
+  
+
+# make plotly
+ggplotly(p)
+
+```
+
+<br>
+
+## Online Project Map
+
+The project map may be accessed by following the link at [ArcGIS Online](https://kwf.maps.arcgis.com/apps/mapviewer/index.html?webmap=c61b78fa1cd24726ab90b40308f932d6)[^results-1] or in the interactive figure below. Toggle layers on/off as needed.
+
+[^results-1]: <https://kwf.maps.arcgis.com/apps/mapviewer/index.html?webmap=c61b78fa1cd24726ab90b40308f932d6>
+
+<iframe width="800" height="600" frameborder="0" scrolling="no" allowfullscreen src="https://kwf.maps.arcgis.com/apps/mapviewer/index.html?webmap=c61b78fa1cd24726ab90b40308f932d6">
+
+</iframe>
+
+</iframe>
+
+<br>
