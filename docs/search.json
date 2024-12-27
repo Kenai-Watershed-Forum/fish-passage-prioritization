@@ -5,5 +5,26 @@
     "title": "Kenai Peninsula Borough Fish Passage Prioritization Data Synthesis [DRAFT]",
     "section": "",
     "text": "Introduction\n\n\n\n\n\nCulvert installed near Tyonek, Alaska in 2024. Left: before replacement, Right: after replacement. (Photo Credit: USFWS & NCRS)\n\n\n\n\n\nFish passage structures, including stream crossing structures like culverts and bridges, serve as critical infrastructure to accommodate floodplain function and aquatic organism movement where rivers intersect with roads, trails, and utility corridors. Historic fish passage structures are frequently compromised or under-designed, threatening both infrastructure and wildlife habitat.\nPrioritizing when and where limited rehabilitation funds for fish passage should be directed can be complex. To assist in this task, databases of fish passage structures have been developed through both fieldwork and GIS mapping exercises. Ecological and physical information such as culvert condition, quantity of upstream habitat, and others can help managers make informed decisions on how to best use funds to maximize benefits for people and wildlife.\nIn Alaska, multiple, non-integrated fish passage databases exist from various agencies, complicating prospect of using all best available information to regionally prioritize rehabilitation funds.\nWe drafted a method to integrate fish passage assessment data from multiple sources for the Kenai Peninsula Borough (KPB) region of southcentral Alaska.\nWe identified 412 documented structures where roads or trails intersect with documented anadromous streams within the Kenai Peninsula Borough. We then applied this synthesized dataset to develop scores on the relative value of improvement (for both infrastructure and stream freshwater habitat) that would be achieved by improving or upgrading individual sites.\nOur method employs a coded script-based approach to integrating various datasets, greatly simplifying the ease of annually updating results presented here. It is the first known published instance in the Kenai Peninsula Borough region to integrate and apply fish passage data inventories from multiple agencies.\nA multitude of additional factors beyond those described here should be considered when prioritizing fish passage rehabilitation, including community support, funding opportunities, and construction logistics. The intent of this work is to provide systematic perspective on the habitat and infrastructure values of improving individual fish passage sites.\nOur results constitute a proof of concept and draft in progress. Additional fieldwork and analysis efforts are needed to ensure complete information. See final chapter, Summary, chapter for details."
+  },
+  {
+    "objectID": "methods.html",
+    "href": "methods.html",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n\nCode\n1 + 1\n\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "3  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.\n\n\nCode\n1 + 1\n\n\n[1] 2"
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
   }
 ]
