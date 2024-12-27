@@ -1,9 +1,40 @@
-# Preface {.unnumbered}
+# Introduction {.unnumbered}
 
-This is a Quarto book.
+---
+date: "`r Sys.Date()`"
+---
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+```{r , include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
 
-```{r}
-1 + 1
+# clear environment
+rm(list=ls())
+
+# load packages
+library(tinytex)
+library(tidyverse)
+library(knitr)
+library(xfun)
 ```
+
+```{r echo = F, fig.cap = "Culvert installed near Tyonek, Alaska in 2024. Left: before replacement, Right: after replacement. (Photo Credit: USFWS & NCRS)"}
+
+knitr::include_graphics('other/images/tyonek_culvert.jpg')
+
+```
+
+-   Fish passage structures, including stream crossing structures like culverts and bridges, serve as critical infrastructure to accommodate floodplain function and aquatic organism movement where rivers intersect with roads, trails, and utility corridors. Historic fish passage structures are frequently compromised or under-designed, threatening both infrastructure and wildlife habitat.
+
+-   Prioritizing when and where limited rehabilitation funds for fish passage should be directed can be complex. To assist in this task, databases of fish passage structures have been developed through both fieldwork and GIS mapping exercises. Ecological and physical information such as culvert condition, quantity of upstream habitat, and others can help managers make informed decisions on how to best use funds to maximize benefits for people and wildlife.
+
+-   In Alaska, multiple, non-integrated fish passage databases exist from various agencies, complicating prospect of using all best available information to regionally prioritize rehabilitation funds.
+
+-   We drafted a method to integrate fish passage assessment data from multiple sources for the Kenai Peninsula Borough (KPB) region of southcentral Alaska.
+
+-   We identified 412 documented structures where roads or trails intersect with documented anadromous streams within the Kenai Peninsula Borough. We then applied this synthesized dataset to develop scores on the relative value of improvement (for both infrastructure and stream freshwater habitat) that would be achieved by improving or upgrading individual sites.
+
+-   Our method employs a coded script-based approach to integrating various datasets, greatly simplifying the ease of annually updating results presented here. It is the first known published instance in the Kenai Peninsula Borough region to integrate and apply fish passage data inventories from multiple agencies.
+
+-   A multitude of additional factors beyond those described here should be considered when prioritizing fish passage rehabilitation, including community support, funding opportunities, and construction logistics. The intent of this work is to provide systematic perspective on the habitat and infrastructure values of improving individual fish passage sites.
+
+-   Our results constitute a proof of concept and draft in progress. Additional fieldwork and analysis efforts are needed to ensure complete information. See final chapter, Summary, chapter for details.
