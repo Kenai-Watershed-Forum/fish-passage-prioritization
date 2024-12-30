@@ -29,12 +29,12 @@ knitr::include_graphics('other/images/tyonek_culvert.jpg')
 
 -   In Alaska, multiple, non-integrated fish passage databases exist from various agencies, complicating prospect of using all best available information to regionally prioritize rehabilitation funds.
 
--   We drafted a method to integrate fish passage assessment data from multiple sources for the Kenai Peninsula Borough (KPB) region of southcentral Alaska.
+-   In 2024, [Kenai Watershed Forum](https://www.kenaiwatershed.org/) collaborated with [River Focus](https://www.riverfocus.com/) to draft a method to integrate fish passage assessment data from multiple sources for the Kenai Peninsula Borough (KPB) region of southcentral Alaska.
 
 -   We identified 412 documented structures where roads or trails intersect with documented anadromous streams within the Kenai Peninsula Borough. We then applied this synthesized dataset to develop scores on the relative value of improvement (for both infrastructure and stream freshwater habitat) that would be achieved by improving or upgrading individual sites.
 
--   Our method employs a coded script-based approach to integrating various datasets, greatly simplifying the ease of annually updating results presented here. It is the first known published instance in the Kenai Peninsula Borough region to integrate and apply fish passage data inventories from multiple agencies.
+-   Our method employs a coded script-based approach to integrating various datasets, greatly simplifying the ease of annually updating results presented here. It is the first known attempt in the Kenai Peninsula Borough region to integrate and apply fish passage data inventories from multiple agencies.
 
 -   A multitude of additional factors beyond those described here should be considered when prioritizing fish passage rehabilitation, including community support, funding opportunities, and construction logistics. The intent of this work is to provide systematic perspective on the habitat and infrastructure values of improving individual fish passage sites.
 
--   Our results constitute a proof of concept and draft in progress. Additional fieldwork and analysis efforts are needed to ensure complete information. See final chapter, Summary, chapter for details.
+-   As of `r Sys.Date()` our results constitute a draft in progress and proof of concept, and should not yet be considered authoritative. Additional fieldwork and analysis efforts are needed to ensure complete information. See final chapter, Summary, chapter for details.

@@ -18,30 +18,43 @@ library(tidyverse)
 library(knitr)
 library(xfun)
 library(openxlsx)
+library(openxlsx2)
 library(plotly)
 library(readxl)
-library(leaflet)
+library(htmlwidgets)
 ```
 
-## Export and prep
+## Quadrant ranking
 
-```{r}
+We plotted each site by it's physical and ecological scores on XY axes (@fig-quadrant). Each point represents an individual site, and upon clicking directs to the location by opening up Google Maps in a new web browser page.
 
+Note that points in @fig-quadrant are jittered, meaning that they are deliberately spread out slighty in order to visualize values that would otherwise be superimposed atop each other.
+
+```{r fig-quadrant, fig.cap="Test"}
 #| code-fold: true
 #| code-summary: "Show the code"
+#| fig-label: fig-quadrant
+
+# Export and prep
 
 # read in merged data set
 today <- format(Sys.Date(), "%m%d%Y") # MMDDYYYY format
 master_data_set_file_name <- paste0("other/output/","CombinedData_", today, ".xlsx")
 merged_data_set <- read_excel(master_data_set_file_name)
 
+# Prep master data sheet with coordinates hyperlinked to Google Maps
+merged_data_set <- merged_data_set |>
+  mutate(location_hyperlink = paste0("https://www.google.com/maps/search/?api=1&query= ",Longitude,Latitude))
+
+
 # Create the plot
-p <- ggplot(merged_data_set, aes(x = Priority_Ecological, y = Priority_Physical,
-                                 text = paste("Location:",Latitude,Longitude,"\n",
-                                              "Stream:",`Stream Name`))) +
-  geom_jitter(color = "blue", size = 2, width = .4, height = 0.4) +
-  labs(x = "Ecological Condition", y = "Physical Condition") +
-  theme_minimal() +
+#p <- ggplot(merged_data_set, aes(x = Priority_Ecological, y = Priority_Physical,
+#                                 text = paste("Location:",Latitude,Longitude,"\n",
+#                                             "Stream:",`Stream Name`,"\n",
+#                                              "Google Maps", location_hyperlink))) +
+#  geom_jitter(color = "blue", size = 2, width = .4, height = 0.4) +
+#  labs(x = "Ecological Condition", y = "Physical Condition") +
+#  theme_minimal() +
 
 
   # Add the priority zones (adjust colors and labels as needed)
@@ -51,22 +64,67 @@ p <- ggplot(merged_data_set, aes(x = Priority_Ecological, y = Priority_Physical,
   #geom_rect(xmin = 10, xmax = 20, ymin = 5, ymax = 10, fill = "yellow", alpha = 0.2) + 
   
   # Add priority labels
-  annotate("text", x = 5, y = 2.5, label = "4 = Lowest Priority", color = "black") +
-  annotate("text", x = 15, y = 2.5, label = "2 = Hi-Middle Priority", color = "black") +
-  annotate("text", x = 5, y = 7.5, label = "3 = Low-Middle Priority", color = "black") +
-  annotate("text", x = 15, y = 7.5, label = "1 = Highest Priority", color = "black") +
+#  annotate("text", x = 5, y = 2.5, label = "4 = Lowest Priority", color = "black") +
+#  annotate("text", x = 15, y = 2.5, label = "2 = High-Middle Priority", color = "black") +
+#  annotate("text", x = 5, y = 7.5, label = "3 = Low-Middle Priority", color = "black") +
+#  annotate("text", x = 15, y = 7.5, label = "1 = Highest Priority", color = "black") +
 
   # Add axes labels
-  geom_segment(aes(x = 0, y = 0, xend = 20, yend = 0)) +
-  geom_segment(aes(x = 0, y = 0, xend = 0, yend = 12)) +
-  geom_segment(aes(x = 10, y = 0, xend = 10, yend = 12), linetype = 2) +
-  geom_segment(aes(x = 0, y = 6, xend = 20, yend = 6), linetype = 2)
+#  geom_segment(aes(x = -.5, y = -.5, xend = 20, yend = -.5)) +
+#  geom_segment(aes(x = -.5, y = -.5, xend = -.5, yend = 12)) +
+#  geom_segment(aes(x = 10, y = -.5, xend = 10, yend = 12), linetype = 2) +
+#  geom_segment(aes(x = -.5, y = 6, xend = 20, yend = 6), linetype = 2)
   
 
 # make plotly
-ggplotly(p)
+#ggplotly(p)
+
+
+# cleate plotly object
+
+
+# prep plotly graph object
+# modified from River Focus draft by Benjamin Meyer 12/30/2024
+p <- plot_ly(merged_data_set, 
+             x = ~jitter(Priority_Ecological), 
+             y = ~jitter(Priority_Physical)) %>%
+  layout(xaxis = list(zeroline = FALSE, title = "Ecological Priority"), 
+         yaxis = list(zeroline = FALSE, title = "Physical Priority"),
+         # annotations
+         annotations = list(
+           list(x = 5, y = 2.5, text = "4 = Lowest Priority", color = "black", showarrow = FALSE),
+           list(x = 15, y = 2.5, text = "2 = High-Middle Priority", color = "black", showarrow = FALSE),
+           list(x = 5, y = 7.5, text = "3 = Low-Middle Priority", color = "black", showarrow = FALSE),
+           list(x = 15, y = 7.5, text = "1 = Highest Priority", color = "black", showarrow = FALSE)),
+         showlegend = FALSE) %>%
+  # interactive points
+  add_markers(
+    text = paste("Location:",merged_data_set$Latitude,merged_data_set$Longitude,"\n",
+                 "Stream:",merged_data_set$`Stream Name`,"\n",
+                 "Click Point to Open Map in Web Browser"),
+    customdata = paste0("https://www.google.com/maps/search/?api=1&query= ",
+                        merged_data_set$Latitude, ", ", merged_data_set$Longitude)) %>%
+  # line segments
+  add_segments(x = -.5,  y = -.5, xend = 20, yend = -.5, line = list(color = "black", width = 2)) %>%
+  add_segments(x = -.5,  y = -.5, xend = -.5, yend = 12, line = list(color = "black", width = 2)) %>%
+  add_segments(x = 10,  y = -.5, xend = 10, yend = 12, line = list(color = "black", width = 1, dash = "dash")) %>%
+  add_segments(x = -.5,  y = 6, xend = 20, yend = 6, line = list(color = "black", width = 1, dash = "dash"))
+
+
+# render plotly object with points hyperlinked 
+onRender(
+  p, "
+  function(el) {
+    el.on('plotly_click', function(d) {
+      var url = d.points[0].customdata;
+      window.open(url);
+    });
+  }
+")
 
 ```
+
+
 
 <br>
 
