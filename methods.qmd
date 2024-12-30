@@ -39,6 +39,8 @@ We used the following datasets on Kenai Peninsula Borough area stream crossings 
 
 Additional datasets may be integrated by modifying the script below, displayed by clicking the "Code" button. All scripts are hosted in Kenai Watershed Forum's [GitHub account](https://github.com/Kenai-Watershed-Forum/fish-passage-prioritization/).
 
+<br>
+
 ```{r}
 
 #| code-fold: true
