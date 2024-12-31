@@ -24,9 +24,9 @@ library(readxl)
 library(htmlwidgets)
 ```
 
-## Quadrant ranking
+## Ranking by Site
 
-We plotted each site by it's physical and ecological scores on XY axes (@fig-quadrant). Each point represents an individual site, and upon clicking directs to the location by opening up Google Maps in a new web browser page.
+We plotted each site by it's physical and ecological scores on XY axes (@fig-quadrant). Each point represents an individual site. Click each point to see it's location in Google Maps in a new web browser page.
 
 Note that points in @fig-quadrant are jittered, meaning that they are deliberately spread out slighty in order to visualize values that would otherwise be superimposed atop each other.
 
@@ -101,7 +101,7 @@ p <- plot_ly(merged_data_set,
   add_markers(
     text = paste("Location:",merged_data_set$Latitude,merged_data_set$Longitude,"\n",
                  "Stream:",merged_data_set$`Stream Name`,"\n",
-                 "Click Point to Open Map in Web Browser"),
+                 "Click to Open Map in Web Browser"),
     customdata = paste0("https://www.google.com/maps/search/?api=1&query= ",
                         merged_data_set$Latitude, ", ", merged_data_set$Longitude)) %>%
   # line segments
@@ -130,7 +130,7 @@ onRender(
 
 ## Online Project Map
 
-The project map may be accessed by following the link at [ArcGIS Online](https://kwf.maps.arcgis.com/apps/mapviewer/index.html?webmap=c61b78fa1cd24726ab90b40308f932d6)[^results-1] or in the interactive figure below. Toggle layers on/off as needed.
+The project map may be accessed by following the link at [ArcGIS Online](https://kwf.maps.arcgis.com/apps/mapviewer/index.html?webmap=c61b78fa1cd24726ab90b40308f932d6)[^results-1] or in the interactive figure below. Toggle layers on/off as needed by clicking the "Layers" icon on the left hand side of the map.
 
 [^results-1]: <https://kwf.maps.arcgis.com/apps/mapviewer/index.html?webmap=c61b78fa1cd24726ab90b40308f932d6>
 

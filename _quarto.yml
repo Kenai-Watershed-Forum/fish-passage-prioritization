@@ -10,8 +10,8 @@ book:
     - index.qmd
     - methods.qmd
     - results.qmd
-    - summary.qmd
-    - references.qmd
+    - discussion.qmd
+    #- references.qmd
     
   repo-url: https://github.com/Kenai-Watershed-Forum/fish-passage-prioritization
   repo-actions: [edit]
