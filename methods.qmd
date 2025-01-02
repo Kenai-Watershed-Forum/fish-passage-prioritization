@@ -22,9 +22,11 @@ library(xfun)
 Methods described within this document are primarily for purposes of sharing example code to synthesize multiple fish passage datasets. A more detailed report with an expanded methods section is available for download at the link below.
 
 ```{r echo = F}
-xfun::embed_file("other/riverfocus_deliverables/KWF_CulvertPrioritizationProject_DRAFTREPORT_01022025.docx")
+xfun::embed_file("other/riverfocus_deliverables/KWF_CulvertPrioritizationProject_DRAFTREPORT_01022025.docx", text = "Download Draft Report")
 
 ```
+
+<br>
 
 ## Load and Integrate Datasets
 
