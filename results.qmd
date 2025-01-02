@@ -30,7 +30,7 @@ We plotted each site by it's physical and ecological scores on XY axes (@fig-qua
 
 Note that points in @fig-quadrant are jittered, meaning that they are deliberately spread out slighty in order to visualize values that would otherwise be superimposed atop each other.
 
-```{r fig-quadrant, fig.cap="Test"}
+```{r fig-quadrant, fig.cap="Prioritization matrix for documented fish passage sites in the Kenai Peninsula Borough. Click on each point to open a Google Maps link."}
 #| code-fold: true
 #| code-summary: "Show the code"
 #| fig-label: fig-quadrant
@@ -123,8 +123,6 @@ onRender(
 ")
 
 ```
-
-
 
 <br>
 

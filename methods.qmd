@@ -16,12 +16,13 @@ library(knitr)
 library(xfun)
 library(openxlsx)
 library(plotly)
+library(xfun)
 ```
 
 Methods described within this document are primarily for purposes of sharing example code to synthesize multiple fish passage datasets. A more detailed report with an expanded methods section is available for download at the link below.
 
 ```{r echo = F}
-#xfun:embed_file()
+xfun::embed_file("other/riverfocus_deliverables/KWF_CulvertPrioritizationProject_DRAFTREPORT_01022025.docx")
 
 ```
 
@@ -188,7 +189,7 @@ We assigned ranking values on a scale of 1-10 for ecological attributes associat
 -   Fish species composition
 -   Linear (stream) habitat quantity upstream
 -   Area (lake) habitat quantity upstream
-    -   *Note: the original analysis plan intended to use predicted (probable) upstream habitat quantity rather than solely known (documented) habitat quantity. The task was determined to beyond the scope of this project, but future analysis should incorporate this task. See the "Summary" chapter for details.*
+    -   *Note: the original analysis plan intended to use predicted (probable) upstream habitat quantity rather than solely known (documented) habitat quantity. The task was determined to beyond the scope of this project, but future analysis should incorporate this task. See the [Discussion](#discussion) chapter for details.*
 
 ```{r}
 

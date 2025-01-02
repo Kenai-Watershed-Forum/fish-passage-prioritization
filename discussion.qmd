@@ -1,4 +1,4 @@
-# Discussion
+# Discussion {#discussion}
 
 ```{r , include=FALSE}
 # R 4.4.1 | Created by Brady Halvorson with River Focus, Inc. November 8, 2024.
@@ -25,18 +25,20 @@ library(htmltools)
 
 Our results constitute a proof of concept method that can annually integrate multiple, distinct data inventories of fish passage structures (e.g. culverts) and freshwater habitat data within the Kenai Peninsula Borough, then apply that data to calculate a relative prioritization score.
 
-The regional prioritization scores provide a useful and important perspective to help managers decide how and when restoration funds should be directed. However, before considering this exercise to be complete, several additional needs must be resolved, which are described below (as of `r Sys.Date()`):
+The regional prioritization scores provide a useful and important perspective to help managers decide how and when restoration funds should be directed. However, before considering this exercise to be complete, several criitical needs must be resolved, which are described below in rough order of priority (as of `r Sys.Date()`).
 
-1.  **Address missing culvert physical descriptor data:** In the final combined data set, most fish passage structures inventoried do not have any associated physical data (\~350 out of 412 sites). See @tbl-phys, which displays unique row counts for all locations in the final data set. The "row_count" column indicates the number of instances with unique combinations of perch height, constriction ratio, and slope.
+The list below represents a ready opportunity to complete an active research project and produce a robust tool with which local managers are eager to engage.
+
+1.  **Address missing culvert physical descriptor data:** In the final combined data set, most fish passage structures inventoried do not have any associated physical data (\~350 out of 419 sites). See @tbl-phys, which displays unique row counts for all locations in the final data set. The "row_count" column indicates the number of instances with unique combinations of perch height, constriction ratio, and slope.
 
     -   It is likely that the low number of sites with documented culvert structure conditions in the final data set is an artifact of the code synthesizing these data sets, rather than a lack of field data. Some data column may have been dropped when descriptors or methods appear incompatible among agencies. A solution can likely be achieved by revising how the structured of Alaska Dept of Fish and Game and US Fish and Wildlife Service data sets overlap.
 
     -   As a result, most of the results described in this report do not currently incorporate physical descriptors data, as it is largely not present in the final combined dataset.
 
-```{r tbl-phys}
+```{r tbl-phys, fig.cap = "Unique row count for culvert physical conditions data; combined Kenai Peninsula Borough fish passage datasets. (Version 1.0, 12/23/2024)"}
 #| code-fold: true
 #| code-summary: "Show the code"
-#| fig-cap: "Unique row count for culvert physical conditions data; combined Kenai Peninsula Borough fish passage datasets. (Version 1.0, 12/23/2024)"
+#| fig-label: tbl-phys
 
 # read in merged data set
 today <- format(Sys.Date(), "%m%d%Y") # MMDDYYYY format
@@ -56,19 +58,21 @@ datatable(tbl1, options = list(pageLength = 5))
   
 ```
 
-2.  **Incorporate [probable]{.underline} upstream anadromous habitat into analyses**: The current final combined dataset includes reported (e.g documented in the ADF&G Anadromous Waters Catalog, or AWC) stream miles above each fish passage structure. As a result the current analysis is incomplete in two ways:
+2.  **Complete incorporation of reported and probable anadromous habitat into data synthesis:**
 
-    -   The ADF&G AWC is estimated to include at most \~50% of all actual anadromous water bodies state-wide[^discussion-1]. Water bodies are presumed to be *not* anadromous unless otherwise documented. Documenting and modeling anadromous waters is a topic of active research in Alaska and the Pacific Northwest[^discussion-2],[^discussion-3].
+    -   [Reported Habitat:]{.underline} The current combined dataset includes reported (e.g. listed in the ADF&G Anadromous Waters Catalog (AWC)) upstream habitat stream lengths for 221 of 419 fish passage sites, and reported acreage (lakes) for 7 of 419 fish passage sites. Using tools in ArcGIS Pro, it will be possible to generate values for upstream stream length and acreage for all sites. However it may not be urgent to generate these values, because it will be preferable to instead use *probable* habitat values in the prioritization matrix, as discussed below.
 
-    -   The initial work plan for this analysis included use of probable upstream anadromous habitat. Kenai Watershed Forum and [St. Mary's University of Minnesota Geospatial Services](https://www.geospatialservices.org/) generated a draft modified shape file of the National Hydrography Database, which estimated the total extent of probable anadromous habitat based on the locations of potential barriers to upstream migration of adult salmon. However, during this project it was discovered that this shape file required multiple additional QA/QC steps, and addressing them was beyond the scope of current efforts.
+    -   [Probable Habitat:]{.underline} As the ADF&G AWC is estimated to include at most only \~50% of all actual anadromous water bodies state-wide[^discussion-1], for our prioritization effort it will important to use a measure of "probable" habitat. Alaskan water bodies are presumed to be *not* anadromous unless otherwise documented. Documenting and modeling anadromous waters is a topic of active research in Alaska and the Pacific Northwest[^discussion-2],[^discussion-3].
+
+        -   The initial work plan for this analysis included use of probable upstream anadromous habitat. Kenai Watershed Forum and [St. Mary's University of Minnesota Geospatial Services](https://www.geospatialservices.org/) generated a draft modified shape file of the National Hydrography Database, which estimated the total extent of probable anadromous habitat based on the locations of potential barriers to upstream migration of adult salmon. However, during this project it was discovered that this shape file required multiple additional QA/QC steps, and addressing them was beyond the scope of current efforts and funding.
 
 3.  **Document all locations in the Kenai Peninsula Borough where streams intersect with with transportation and utility corridor infrastructure**
 
     -   Each site where streams intersect with linear infrastructure (roads, trails, and utilities) represents a potential freshwater habitat obstruction or point of degradation.
 
-    -   We recommend performing a desktop GIS exercise, intersecting all borough transportation and utility corridor shape files (roads, trails, rail, electrical) with the National Hydrography Databse. We will create a shape file of point locations from these intersections. (Results from this exercise may already be available from the Palmer Soil and Water Conservation District office). Where field assessment data does not exist for these sites, it will be necessary to conduct additional site assessments using a field protocol.
+    -   We recommend performing a desktop GIS exercise, intersecting all borough transportation and utility corridor shape files (roads, trails, rail, electrical) with the National Hydrography Database. We will create a shape file of point locations from these intersections. (Results from this exercise may already be available from the Palmer Soil and Water Conservation District office). Where field assessment data does not exist for these sites, it will be necessary to conduct additional site assessments using a field protocol.
 
-    -   Once available, these data can be integrated into the analyses presented here.
+    -   Once available, these data can be integrated into the prioritization matrix presented here.
 
 [^discussion-1]: <https://www.adfg.alaska.gov/sf/SARR/AWC/>
 
@@ -76,13 +80,21 @@ datatable(tbl1, options = list(pageLength = 5))
 
 [^discussion-3]: <https://www.kenaiwatershed.org/about-kwf/news-media/>
 
+## Funding Sources
+
+We drafted a list of funding opportunities that will be pertinent for fish passage in the Kenai region, available for download below.
+
+```{r echo = F}
+xfun::embed_file("other/riverfocus_deliverables/Appendix_B_Funding_List.xlsx", text = "Download Compiled Potential Funding Sources for Fish Passage Projects")
+
+```
+
 ## National Efforts
 
-The Aquatic Barrier Inventory and Prioritzation Tool ([www.aquaticbarriers.org](https://aquaticbarriers.org/)) is a national effort to provide a detailed tool that can help managers make informed and systematic decisions about regional fish passage prioritization. For the Kenai Peninsula Borough, this tool [currently lists 239 sites](https://aquaticbarriers.org/explore/?region=alaska), primarily those cross-listed in the Alaska Department of Fish and Game fish passage inventory (219 sites). Other agency data sources, such as the US Fish and Wildlife Service Fish Barrier Hunter App database, are not currently incorporated.
+The Aquatic Barrier Inventory and Prioritzation Tool ([www.aquaticbarriers.org](https://aquaticbarriers.org/)) is a national effort to provide a detailed tool that can help managers make informed and systematic decisions about regional fish passage prioritization. For the Kenai Peninsula Borough, this tool [currently lists only 239 sites](https://aquaticbarriers.org/explore/?region=alaska), primarily those cross-listed in the Alaska Department of Fish and Game fish passage inventory (219 sites). Other agency data sources, such as the US Fish and Wildlife Service Fish Barrier Hunter App database, are not currently incorporated.
 
-While some aspects of fish passage data management and results may be distinct for Alaska vs. the rest of the United States, the benefits of incorporating Alaska fish passage data into the aquaticbarriers.org database is readily apparent. Having a consistent, regularly updated, and centralized source of information will be of great benefit in addition to the various regional prioritization efforts.
+While some aspects of fish passage data management and results may be distinct for Alaska vs. the rest of the United States, the benefits of incorporating more Alaska fish passage data into the aquaticbarriers.org database is readily apparent. Having a consistent, regularly updated, and centralized source of information will be of great benefit in addition to the various regional prioritization efforts.
 
-We recommend that Alaska agencies and organizations engaged in collecting fish passage site assessment field data annually share their results with the Alaska Department of Fish and Game division of Habitat so that results can be integrated into the existing public database and displayed in the [Alaska Fish Resource Monitor online map](https://www.adfg.alaska.gov/index.cfm?adfg=fishpassage.database). Additionally, we recommend that the Alaska Department of Fish and Game formalize the process by which partner agencies and citizens can submit fish passage observations, which is currently by emailing information to a department habitat biologist.
+We recommend that Alaska agencies and organizations engaged in collecting fish passage site assessment field data annually share their results with the Alaska Department of Fish and Game Division of Habitat so that results can be integrated into the existing public ADF&G database, displayed in the [Alaska Fish Resource Monitor online map](https://www.adfg.alaska.gov/index.cfm?adfg=fishpassage.database). Additionally, we recommend that the ADF&G formalize the process by which partner agencies and citizens can submit fish passage observations, which is currently by emailing information to a department habitat biologist.
 
-Annually, after fish passage data is integrated from multiple sources throughout the state, we recommend the Alaska Department of Fish and Game share it's updated database to be integrated into the national Aquatic Barrier Inventory and Prioritzation Tool.
-
+Annually, after fish passage data is integrated from multiple sources throughout the state, we recommend that ADF&G share it's updated database to be integrated into the national Aquatic Barrier Inventory and Prioritzation Tool.
